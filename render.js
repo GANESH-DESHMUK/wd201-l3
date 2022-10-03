@@ -1,26 +1,30 @@
-const fetchUserDetails = (userID) => {
+const time = async (ms) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve();
+    }, ms);
+  });
+};
+const fetchUserDetails = async (userID) => {
   console.log("Fetching User details");
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(`http://image.example.com/${userID}`);
-    }, 500)
-  })
+  await time(500);
+  return `http://image.example.com/${userID}`;
 };
-const downloadImage = (imageURL) => {
+
+const downloadImage = async (imageURL) => {
   console.log("Downloading image");
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(`image data for ${imageURL}`);
-    }, 500)
-  })
+  await time(500);
+  return `image data for ${imageURL}`;
 };
-const render = (image) => {
+
+const render = async (image) => {
+  await time(500);
   console.log("Rendering image ");
 };
 
-fetchUserDetails("Ganesh")
-  .then((iamgeURL) => downloadImage(imageURL))
-  .then((imageData) => render(imageData))
-  .catch((error) => {
-    console.log('error');
-  })
+const run = async () => {
+  const imageURL = await fetchUserDetails("Ganesh");
+  const imageData = await downloadImage(imageURL);
+  await render(imageData);
+}
+run();

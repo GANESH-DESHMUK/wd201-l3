@@ -1,21 +1,26 @@
-const fetchUserDetails = (userID, callback) => {
+const fetchUserDetails = (userID) => {
   console.log("Fetching User details");
-  setTimeout(() => {
-    callback(`http://image.example.com/${userID}`);
-  }, 500)
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(`http://image.example.com/${userID}`);
+    }, 500)
+  })
 };
-const downloadImage = (imageURL, callback) => {
+const downloadImage = (imageURL) => {
   console.log("Downloading image");
-  setTimeout(() => {
-    callback(` image data for ${imageURL}`);
-  }, 500)
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(`image data for ${imageURL}`);
+    }, 500)
+  })
 };
 const render = (image) => {
   console.log("Rendering image ");
 };
 
-fetchUserDetails("Ganesh", (imageURL) => {
-  downloadImage(imageURL, (imageData) => {
-    render(imageData);
+fetchUserDetails("Ganesh")
+  .then((iamgeURL) => downloadImage(imageURL))
+  .then((imageData) => render(imageData))
+  .catch((error) => {
+    console.log('error');
   })
-})
